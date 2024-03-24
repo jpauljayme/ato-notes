@@ -1,5 +1,7 @@
 package dev.mayhm.atonotes.controller;
 
+import dev.mayhm.atonotes.dto.ApiResponse;
+import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.service.NoteService;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,9 @@ public class NoteController {
     }
 
     @PostMapping()
-    public String createNote(@RequestBody Note note){
-        return note.toString();
+    public ApiResponse createNote(@RequestBody Note note){
+        ErrorDetails errors = noteService.createNote(note);
+        return errors.isNoError() ? new A : "Failed to create a note.";
     }
 
 }

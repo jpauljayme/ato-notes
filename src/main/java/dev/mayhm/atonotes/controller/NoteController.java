@@ -4,6 +4,7 @@ import dev.mayhm.atonotes.dto.ApiResponse;
 import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.service.NoteService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -15,7 +15,5 @@ public class ErrorDetails extends Exception {
         return errorList.isEmpty();
     }
 
-    public List<NoteError> getErrorList() {
-        return errorList;
-    }
 }
+

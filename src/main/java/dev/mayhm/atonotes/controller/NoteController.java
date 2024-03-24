@@ -26,7 +26,9 @@ public class NoteController {
     @PostMapping()
     public ApiResponse createNote(@RequestBody Note note){
         ErrorDetails errors = noteService.createNote(note);
-        return errors.isNoError() ? new A : "Failed to create a note.";
+      
+        return errors.isNoError() ? new ApiResponse(HttpStatus.CREATED, note)
+                : new ApiResponse(HttpStatus.BAD_REQUEST, errors);
     }
 
 }

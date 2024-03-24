@@ -20,4 +20,5 @@ public class NoteController {
                         "Second Note",
                         "This is rising action of something! Huh..."));
     }
+    
 }

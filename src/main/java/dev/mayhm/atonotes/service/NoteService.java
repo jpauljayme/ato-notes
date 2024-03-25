@@ -26,18 +26,33 @@ public class NoteService {
 
         ErrorDetails errorDetails = new ErrorDetails();
 
-        if(note.title().isBlank() ){
-            errorDetails.addError(new NoteError("ERROR_INVALID_TITLE", "Title cannot be blank."));
+        if(note.getTitle().isBlank() ){
+            errorDetails.addError(new NoteError("INVALID_TITLE",
+                    "Title cannot be blank."));
         }
 
-        if(note.body().isBlank()){
-            errorDetails.addError(new NoteError("ERROR_INVALID_BODY", "Body cannot be blank."));
+        if(note.getBody().isBlank()){
+            errorDetails.addError(new NoteError("INVALID_BODY",
+                    "Body cannot be blank."));
         }
 
         if(errorDetails.isNoError()){
             noteRepository.createNote(note);
         }
 
+        return errorDetails;
+    }
+
+    public ErrorDetails updateNote(int id, Note note) {
+
+        ErrorDetails errorDetails = new ErrorDetails();
+
+        if(noteRepository.checkIfIdExists(id)){
+            noteRepository.updateNote(note);
+        }else{
+            errorDetails.addError(new NoteError("INVALID_ID",
+                    "Note not found"));
+        }
         return errorDetails;
     }
 }

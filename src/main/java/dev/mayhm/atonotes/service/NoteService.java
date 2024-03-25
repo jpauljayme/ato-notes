@@ -26,7 +26,6 @@ public class NoteService {
 
         ErrorDetails errorDetails = new ErrorDetails();
 
-        //TODO: Implement validation
         if(note.title().isBlank() ){
             errorDetails.addError(new NoteError("ERROR_INVALID_TITLE", "Title cannot be blank."));
         }
@@ -34,6 +33,11 @@ public class NoteService {
         if(note.body().isBlank()){
             errorDetails.addError(new NoteError("ERROR_INVALID_BODY", "Body cannot be blank."));
         }
+
+        if(errorDetails.isNoError()){
+            noteRepository.createNote(note);
+        }
+
         return errorDetails;
     }
 }

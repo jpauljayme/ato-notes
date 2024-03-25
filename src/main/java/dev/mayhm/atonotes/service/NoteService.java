@@ -33,6 +33,11 @@ public class NoteService {
         if(note.body().isBlank()){
             errorDetails.addError(new NoteError("ERROR_INVALID_BODY", "Body cannot be blank."));
         }
+
+        if(errorDetails.isNoError()){
+            noteRepository.createNote(note);
+        }
+
         return errorDetails;
     }
 }

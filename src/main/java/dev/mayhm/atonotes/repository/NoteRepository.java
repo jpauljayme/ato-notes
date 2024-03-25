@@ -26,8 +26,13 @@ public class NoteRepository {
         return new ArrayList<>(notes);
     }
 
-    public boolean createNote(Note note) {
-        return notes.add(note);
+    public Note createNote(Note note) {
+
+        Note noteWithId = new Note(notes.size() + 1,
+                note.title(),
+                note.body());
+        notes.add(noteWithId);
+        return noteWithId;
     }
 
 }

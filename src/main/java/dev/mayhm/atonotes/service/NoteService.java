@@ -26,7 +26,6 @@ public class NoteService {
 
         ErrorDetails errorDetails = new ErrorDetails();
 
-        //TODO: Implement validation
         if(note.title().isBlank() ){
             errorDetails.addError(new NoteError("ERROR_INVALID_TITLE", "Title cannot be blank."));
         }

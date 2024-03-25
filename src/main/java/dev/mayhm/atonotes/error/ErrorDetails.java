@@ -3,7 +3,7 @@ package dev.mayhm.atonotes.error;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ErrorDetails extends Exception {
+public class ErrorDetails {
 
     List<NoteError> errorList = new ArrayList<>();
 
@@ -15,5 +15,8 @@ public class ErrorDetails extends Exception {
         return errorList.isEmpty();
     }
 
+    public List<NoteError> getErrorList() {
+        return errorList;
+    }
 }
 

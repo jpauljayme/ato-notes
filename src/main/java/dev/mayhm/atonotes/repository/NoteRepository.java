@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class NoteRepository {
@@ -51,5 +52,10 @@ public class NoteRepository {
                     note.setBody(updatedNote.getBody());
                     note.setTitle(updatedNote.getTitle());
                 });
+    }
+
+    public Optional<Note> getNoteById(int id) {
+        return notes.stream().filter(note -> note.getId() == id)
+                .findFirst();
     }
 }

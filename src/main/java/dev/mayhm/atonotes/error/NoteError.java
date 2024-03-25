@@ -1,4 +1,4 @@
 package dev.mayhm.atonotes.error;
 
-public record NoteError(String type, String description){
+public record NoteError(String description){
 }

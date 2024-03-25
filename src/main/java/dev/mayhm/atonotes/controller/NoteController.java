@@ -5,9 +5,9 @@ import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.service.NoteService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController()
@@ -25,12 +25,21 @@ public class NoteController {
         return noteService.getAllNotes();
     }
 
-    @PostMapping()
-    public ApiResponse createNote(@RequestBody Note note){
-        ErrorDetails errors = noteService.createNote(note);
+    @GetMapping("/{id}")
+    public ResponseEntity<Note> getNoteById(@PathVariable int id){
+        Note noteById = noteService.getNoteById(id);
 
-        return errors.isNoError() ? new ApiResponse(HttpStatus.CREATED, note, null)
-                : new ApiResponse(HttpStatus.BAD_REQUEST, note, errors);
+        return ResponseEntity.status(HttpStatus.OK)
+                    .body(noteById);
+
+    }
+
+    @PostMapping()
+    public ResponseEntity<Note> createNote(@RequestBody Note note){
+        noteService.createNote(note);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(note);
         
     }
 

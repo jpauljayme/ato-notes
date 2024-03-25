@@ -1,13 +1,17 @@
 package dev.mayhm.atonotes.service;
 
-import dev.mayhm.atonotes.dto.ApiResponse;
 import dev.mayhm.atonotes.error.ErrorDetails;
-import dev.mayhm.atonotes.error.NoteError;
+import dev.mayhm.atonotes.exception.InvalidBodyException;
+import dev.mayhm.atonotes.exception.InvalidNoteException;
+import dev.mayhm.atonotes.exception.InvalidTitleException;
+import dev.mayhm.atonotes.exception.NoteNotFoundException;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -22,25 +26,22 @@ public class NoteService {
         return noteRepository.getAllNotes();
     }
 
-    public ErrorDetails createNote(Note note) {
-
-        ErrorDetails errorDetails = new ErrorDetails();
+    public void createNote(Note note) {
+        List<Throwable> exceptions = new ArrayList<>();
 
         if(note.getTitle().isBlank() ){
-            errorDetails.addError(new NoteError("INVALID_TITLE",
-                    "Title cannot be blank."));
+            exceptions.add(new InvalidTitleException());
         }
 
         if(note.getBody().isBlank()){
-            errorDetails.addError(new NoteError("INVALID_BODY",
-                    "Body cannot be blank."));
+            exceptions.add(new InvalidBodyException());
         }
 
-        if(errorDetails.isNoError()){
-            noteRepository.createNote(note);
+        if (!exceptions.isEmpty()) {
+            throw new InvalidNoteException(exceptions);
         }
 
-        return errorDetails;
+        noteRepository.createNote(note);
     }
 
     public ErrorDetails updateNote(int id, Note note) {
@@ -50,9 +51,18 @@ public class NoteService {
         if(noteRepository.checkIfIdExists(id)){
             noteRepository.updateNote(note);
         }else{
-            errorDetails.addError(new NoteError("INVALID_ID",
-                    "Note not found"));
+            throw new NoteNotFoundException();
         }
         return errorDetails;
+    }
+
+    public Note getNoteById(int id) {
+        Optional<Note> noteById = noteRepository.getNoteById(id);
+
+        if(noteById.isPresent()){
+            return noteById.get();
+        }else{
+            throw new NoteNotFoundException();
+        }
     }
 }

@@ -33,4 +33,14 @@ public class NoteController {
                 : new ApiResponse(HttpStatus.BAD_REQUEST, note, errors);
         
     }
+
+    @PutMapping("/{id}")
+    public ApiResponse updateNote(@PathVariable int id,
+                                  @RequestBody Note note){
+        ErrorDetails errors = noteService.updateNote(id,note);
+
+        return errors.isNoError() ? new ApiResponse(HttpStatus.OK, note, null)
+                : new ApiResponse(HttpStatus.BAD_REQUEST, note, errors);
+
+    }
 }

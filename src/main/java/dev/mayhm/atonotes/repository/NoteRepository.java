@@ -29,10 +29,27 @@ public class NoteRepository {
     public Note createNote(Note note) {
 
         Note noteWithId = new Note(notes.size() + 1,
-                note.title(),
-                note.body());
+                note.getTitle(),
+                note.getBody());
         notes.add(noteWithId);
         return noteWithId;
     }
 
+    public boolean checkIfIdExists(int id) {
+        for(Note note : notes){
+            if(note.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updateNote(Note updatedNote) {
+        notes.stream().filter(note -> note.getId() == updatedNote.getId())
+                .findFirst()
+                .ifPresent(note -> {
+                    note.setBody(updatedNote.getBody());
+                    note.setTitle(updatedNote.getTitle());
+                });
+    }
 }

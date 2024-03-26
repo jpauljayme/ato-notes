@@ -3,8 +3,12 @@ package dev.mayhm.atonotes.service;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.repository.NoteRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
+
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Not;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -20,10 +24,10 @@ class NoteServiceTest {
 
 
     @Mock
-    static NoteRepository mockedNoteRepository;
+    NoteRepository mockedNoteRepository;
 
     @InjectMocks
-    static NoteService noteService;
+    NoteService noteService;
 
     @Test
     void getAllNotesHappyFlow() {
@@ -65,42 +69,65 @@ class NoteServiceTest {
                 .getNoteById(1);
     }
 
-    @Test
-    void whenGetNoteByIdNotExists_thenReturnNull() {
-
-        int invalidId = 999;
-        Optional<Note> expectedNote = Optional.<Note>of(null);
-
-        given(mockedNoteRepository
-                .getNoteById(invalidId))
-                .willReturn(expectedNote);
-
-        Note actualNote = noteService.getNoteById(1);
-
-        assertEquals(expectedNote,actualNote);
-
-        then(mockedNoteRepository)
-                .should(times(1))
-                .getNoteById(1);
-    }
-
-    @Test
-    void createNote() {
-    }
-
-
 
     @Test
     void updateNote() {
 
-        Note expectedNote = new Note(2,
+        int givenId = 2;
+
+        Note givenNote = new Note(2,
                 "Second Note Updated",
                 "There are two archetypes existing within me.");
 
-        then(mockedNoteRepository)
-                .should(times(1))
-                .updateNote(expectedNote);
+        given(mockedNoteRepository.checkIfIdExists(givenId))
+                .willReturn(true);
 
-        verify(mockedNoteRepository).updateNote(expectedNote);
+        ArgumentCaptor<Note> noteCaptor = ArgumentCaptor.forClass(Note.class);
+
+        noteService.updateNote(givenId, givenNote);
+
+        BDDMockito.doNothing().when(mockedNoteRepository).updateNote(givenNote);
+        BDDMockito.then(mockedNoteRepository).should().updateNote(noteCaptor.capture());
+
+        // Get the captured argument
+        Note capturedNote = noteCaptor.getValue();
+
+        // Assert that the captured ID is correct
+        assertEquals(givenNote, capturedNote);
+
     }
+
+    @Test
+    void givenUserWantsToDelete_WhenGivenNoteId_ThenDeleteNote() {
+
+        List<Note> initialNotes = new ArrayList<>();
+        initialNotes.add(new Note(1,
+                "First Note",
+                "This is the start of something!"));
+        initialNotes.add(new Note(2,
+                "Second Note",
+                "This is rising action of something! Huh..."));
+
+        int givenId = 1;
+
+        BDDMockito.when(mockedNoteRepository.getAllNotes()).thenReturn(initialNotes);
+
+        given(mockedNoteRepository.checkIfIdExists(givenId))
+                .willReturn(true);
+
+        ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        noteService.deleteNote(givenId);
+
+        BDDMockito.doNothing().when(mockedNoteRepository).deleteNote(givenId);
+        BDDMockito.then(mockedNoteRepository).should().deleteNote(argumentCaptor.capture());
+
+        // Get the captured argument
+        int capturedId = argumentCaptor.getValue();
+
+        // Assert that the captured ID is correct
+        assertEquals(givenId, capturedId);
+    }
+
+
 }

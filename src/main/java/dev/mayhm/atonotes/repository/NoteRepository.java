@@ -57,4 +57,8 @@ public class NoteRepository {
         return notes.stream().filter(note -> note.getId() == id)
                 .findFirst();
     }
+
+    public void deleteNote(int id) {
+        notes.removeIf( note -> note.getId() == id);
+    }
 }

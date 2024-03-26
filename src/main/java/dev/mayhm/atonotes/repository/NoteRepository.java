@@ -55,5 +55,5 @@ public class NoteRepository {
     public void deleteNote(int id) {
         notes.removeIf( note -> note.getId() == id);
     }
-    
+
 }

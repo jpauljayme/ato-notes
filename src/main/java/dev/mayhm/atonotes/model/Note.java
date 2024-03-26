@@ -1,11 +1,15 @@
 package dev.mayhm.atonotes.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class Note{
 
     private int id;
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String body;
 
     public Note(int id, String title, String body) {

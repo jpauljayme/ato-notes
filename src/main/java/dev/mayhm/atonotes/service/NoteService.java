@@ -25,7 +25,7 @@ public class NoteService {
         return noteRepository.getAllNotes();
     }
 
-    public void createNote(Note note) {
+    public Note createNote(Note note) {
         List<Throwable> exceptions = new ArrayList<>();
 
         if(note.getTitle().isBlank() ){
@@ -40,7 +40,7 @@ public class NoteService {
             throw new InvalidNoteException(exceptions);
         }
 
-        noteRepository.createNote(note);
+        return noteRepository.createNote(note);
     }
 
     public void updateNote(int id, Note note) {

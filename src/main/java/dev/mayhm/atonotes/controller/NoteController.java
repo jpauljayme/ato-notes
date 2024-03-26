@@ -41,10 +41,10 @@ public class NoteController {
 
     @PostMapping()
     public ResponseEntity<Note> createNote(@RequestBody @Valid Note note){
-        noteService.createNote(note);
+        Note createdNote = noteService.createNote(note);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(note);
+                .body(createdNote);
         
     }
 

@@ -8,7 +8,6 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Not;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;

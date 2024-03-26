@@ -2,9 +2,7 @@ package dev.mayhm.atonotes.controller.advice;
 
 import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.error.NoteError;
-import dev.mayhm.atonotes.exception.InvalidBodyException;
 import dev.mayhm.atonotes.exception.InvalidNoteException;
-import dev.mayhm.atonotes.exception.InvalidTitleException;
 import dev.mayhm.atonotes.exception.NoteNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,7 +32,6 @@ public class ExceptionControllerAdvice {
     StringBuilder message = new StringBuilder();
     List<String> messages = new ArrayList<>();
     for (Throwable ex : exception.getExceptions()) {
-//      message.append(ex.getMessage()).append("\n");
       messages.add(ex.getMessage());
     }
 

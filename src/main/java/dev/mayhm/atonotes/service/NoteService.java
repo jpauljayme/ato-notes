@@ -61,4 +61,13 @@ public class NoteService {
             throw new NoteNotFoundException();
         }
     }
+
+    public void deleteNote(int id) {
+        if(noteRepository.checkIfIdExists(id)){
+            noteRepository.deleteNote(id);
+        }else{
+            throw new NoteNotFoundException();
+        }
+
+    }
 }

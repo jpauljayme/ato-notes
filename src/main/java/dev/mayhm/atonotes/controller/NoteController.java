@@ -50,4 +50,13 @@ public class NoteController {
                 .body(note);
 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteNote(@PathVariable int id){
+        noteService.deleteNote(id);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Deleted note with id " + id);
+
+    }
 }

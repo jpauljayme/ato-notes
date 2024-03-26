@@ -1,7 +1,5 @@
 package dev.mayhm.atonotes.controller.advice;
 
-import dev.mayhm.atonotes.error.ErrorDetails;
-import dev.mayhm.atonotes.error.NoteError;
 import dev.mayhm.atonotes.exception.InvalidNoteException;
 import dev.mayhm.atonotes.exception.NoteNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +14,6 @@ public class ExceptionControllerAdvice {
 
   @ExceptionHandler(NoteNotFoundException.class)
   public ResponseEntity<String> exceptionNoteNotFoundHandler(NoteNotFoundException exception) {
-    ErrorDetails errorDetails = new ErrorDetails();
-
-    NoteError noteError = new NoteError("Note not found.");
-
-    errorDetails.addError(noteError);
 
     return ResponseEntity
         .badRequest()

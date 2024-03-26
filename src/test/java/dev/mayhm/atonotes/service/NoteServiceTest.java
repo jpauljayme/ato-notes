@@ -1,18 +1,11 @@
 package dev.mayhm.atonotes.service;
 
-import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.repository.NoteRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;

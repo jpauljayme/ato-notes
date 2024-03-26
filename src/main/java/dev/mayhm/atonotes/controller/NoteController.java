@@ -1,7 +1,5 @@
 package dev.mayhm.atonotes.controller;
 
-import dev.mayhm.atonotes.dto.ApiResponse;
-import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.model.Note;
 import dev.mayhm.atonotes.service.NoteService;
 import org.springframework.http.HttpStatus;
@@ -44,12 +42,12 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse updateNote(@PathVariable int id,
-                                  @RequestBody Note note){
-        ErrorDetails errors = noteService.updateNote(id,note);
+    public ResponseEntity<Note> updateNote(@PathVariable int id,
+                                           @RequestBody Note note){
+        noteService.updateNote(id,note);
 
-        return errors.isNoError() ? new ApiResponse(HttpStatus.OK, note, null)
-                : new ApiResponse(HttpStatus.BAD_REQUEST, note, errors);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(note);
 
     }
 }

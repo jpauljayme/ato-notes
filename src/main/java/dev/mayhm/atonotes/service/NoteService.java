@@ -1,6 +1,5 @@
 package dev.mayhm.atonotes.service;
 
-import dev.mayhm.atonotes.error.ErrorDetails;
 import dev.mayhm.atonotes.exception.InvalidBodyException;
 import dev.mayhm.atonotes.exception.InvalidNoteException;
 import dev.mayhm.atonotes.exception.InvalidTitleException;
@@ -44,16 +43,13 @@ public class NoteService {
         noteRepository.createNote(note);
     }
 
-    public ErrorDetails updateNote(int id, Note note) {
-
-        ErrorDetails errorDetails = new ErrorDetails();
+    public void updateNote(int id, Note note) {
 
         if(noteRepository.checkIfIdExists(id)){
             noteRepository.updateNote(note);
         }else{
             throw new NoteNotFoundException();
         }
-        return errorDetails;
     }
 
     public Note getNoteById(int id) {

@@ -14,12 +14,6 @@ public class NoteRepository {
 
     public NoteRepository() {
         notes= new ArrayList<>();
-        notes.add(new Note(1,
-                        "First Note",
-                        "This is the start of something!"));
-        notes.add(new Note(2,
-                        "Second Note",
-                        "This is rising action of something! Huh..."));
     }
 
     public List<Note> getAllNotes() {
